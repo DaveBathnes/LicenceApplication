@@ -72,14 +72,34 @@ namespace LicenceApplication
             // Print out the response - different styles if success or rejection
             if (response.success)
             {
-                Console.Write("Yes");
+                Console.Write("\n");
+                Console.Write("------------------------------------------------\n");
+                Console.Write("--------- Eligible for Taxi Licence ------------\n");
+                Console.Write("------------------------------------------------\n");
+                Console.Write("\n");
+                Console.Write("Costs: \n");
+
+                for (int i = 0; i < response.costs.Count; i++)
+                {
+                    Console.Write(response.costs[i] + "\n");
+                }
             } else
             {
-                Console.Write("No!");
+                Console.Write("\n");
+                Console.Write("------------------------------------------------\n");
+                Console.Write("--------- Not Eligible for Taxi Licence --------\n");
+                Console.Write("------------------------------------------------\n");
+                Console.Write("\n");
+                Console.Write("Reasons: \n");
+
+                for (int i = 0; i < response.messages.Count; i++)
+                {
+                    Console.Write(response.messages[i] + "\n");
+                }
             }
 
             // Keep application alive 
-            Console.WriteLine("Press any key to exit...");
+            Console.WriteLine("\nPress any key to exit...");
             Console.ReadKey();
         }
     }

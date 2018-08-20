@@ -17,12 +17,12 @@ namespace LicenceApplication
     class LicenceApplication
     {
         /// <summary>
-        /// 
+        /// Checks for licence eligibility given a number of driver inputs
         /// </summary>
-        /// <param name="licenceType"></param>
-        /// <param name="dvla"></param>
-        /// <param name="licenceTerm"></param>
-        /// <param name="dateOfBirth"></param>
+        /// <param name="licenceType">The Licence Type, reference to the LicenceType enum</param>
+        /// <param name="dvla">Boolean as to whether the driver has a full DVLA licence</param>
+        /// <param name="licenceTerm">The number of years for the renewal</param>
+        /// <param name="dateOfBirth">The date of birth of the driver</param>
         /// <returns></returns>
         public static LicenceEligibilityResponse CheckLicenceEligibility(LicenceType licenceType, bool dvla, int licenceTerm, DateTime dateOfBirth)
         {
@@ -31,6 +31,11 @@ namespace LicenceApplication
 
             // Get some initial configuration settings
             int minimumAge = int.Parse(configuration["minimum_age"]);
+            double newLicenceCost = double.Parse(configuration["new_licence_fee"]);
+            double licenceAnnualFee = double.Parse(configuration["licence_annual_fee"]);
+            double oneTermDiscount = double.Parse(configuration["one_term_discount"]);
+            double twoTermDiscount = double.Parse(configuration["two_term_discount"]);
+            double threeTermDiscount = double.Parse(configuration["three_term_discount"]);
 
             LicenceEligibilityResponse response = new LicenceEligibilityResponse();
             var messages = new List<string>();
@@ -55,16 +60,37 @@ namespace LicenceApplication
                 messages.Add(String.Format("Licence applicants must hold a full DVLA licence."));
             }
 
-            // 
+            // 3. Calculate the cost of the licence
+            double licenceCost = licenceAnnualFee * licenceTerm;
+            total = total + licenceCost;
+            costs.Add(String.Format("£{0} for {1} year taxi licence charged at {2} per year.", licenceCost.ToString(), licenceTerm.ToString(), licenceAnnualFee));
 
+            // 4. If a new licence add on that cost
+            if (licenceType == LicenceType.New)
+            {
+                total = total + newLicenceCost;
+                costs.Add(String.Format("£{0} for new licence application", newLicenceCost));
+            }
 
-
-
-
-            // Apply any discount
-            total = total - (total * discount);
-
-
+            // 4. Apply any discount
+            if (licenceTerm == 1 && oneTermDiscount > 0.00)
+            {
+                discount = (total * oneTermDiscount);
+                total = total - discount;
+                costs.Add(String.Format("£{0} discount for one year licence.", discount));
+            }
+            if (licenceTerm == 2 && twoTermDiscount > 0.00)
+            {
+                discount = (total * twoTermDiscount);
+                total = total - discount;
+                costs.Add(String.Format("£{0} discount for two year licence.", discount));
+            }
+            if (licenceTerm == 3 && threeTermDiscount > 0.00)
+            {
+                discount = (total * threeTermDiscount);
+                total = total - discount;
+                costs.Add(String.Format("£{0} discount for three year licence.", discount));
+            }
 
             response.messages = messages;
             response.costs = costs;
@@ -83,5 +109,4 @@ namespace LicenceApplication
         public List<string> costs { get; set; }
         public double total { get; set; }
     }
-
 }
