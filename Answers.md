@@ -1,19 +1,30 @@
 Answers
 =======
 
-
 ## How could you make the taxi license cost calculator more valuable for customers?
 
-Initially I was surprised at the requirement to write a console application, but can see the value in this as an exercise.
+Initially I was surprised at the requirement to write a console application, but can see the value in this as an exercise and enjoyed looking at this.
 
-I have tried to code this in a way that would be 
+1. I would convert the cost calculator to be an online tool. Although I like console applications, the ability to centrally manage solftware, deploy it using a web browser, construct a modern UI, and use UI packages to provide input help, navigation, and validation would be very worthwhile here.
+
+2. Similar to the above, the customers also include the public and an online tool to check eligibility of taxi licenses could be exposed to the public so they would be able to check their own eligibility and find out costs. This would then free up time for the licensing team. If the licensing team still receive queries from the public they could direct them to the online tool, as well as using the online tool to provide immediate answers.
+
+4. I would then be interested in other features that could be provided through a licence application product. For example, moving from eligibility and cost check into being able to submit actual applications, and take these through into completion and delivery of the licence. And storing this data in a database.
+
+5. I have included basic configuration so that the prices, discounts, and messages can be edited. In future these could be managed through a user interface that the licensing team would have access to.
 
 ## What is your preferred test framework and why?
 
-Personally I like Selenium as a tool to 
+Perhaps it is because I 'grew up' with Microsoft technologies (from a coding point of view), but I like the Microsoft Suite of tools for both developing and testing. Particularly Visual Studio, the ability to construct Unit Tests, create Mock Services, and run these within the IDE.
 
+I have also previously worked in teams using Visual Studio Team Foundations Services and the suite of collaboration tools that integrate with Source Control (Git) and provide agile project management facilities, build suites, and issue tracking and resolution.
+
+Despite this, more recently I have been working with open web technologies and have been using Selenium both for testing but also automation, and very much enjoy experiencing a mix of tools rather than simply sticking to one technology stack, or suite.
 
 ## How would you speed up the process of turning business ideas into features that customers can use?
+
+
+
 
 ## How would you go about developing a new feature as part of an agile team?
 
