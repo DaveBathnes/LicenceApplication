@@ -42,6 +42,10 @@ namespace LicenceApplication
             double threeTermDiscount = double.Parse(configuration["three_term_discount"]);
             string responseAgeInvalid = configuration["response_age_invalid"];
             string responseDVLARequired = configuration["response_dvla_required"];
+            string responseLicenceCost = configuration["response_licence_cost"];
+            string responseNewLicenceCost = configuration["response_new_licence_cost"];
+            string responseDiscount = configuration["response_discount"];
+            string responseTotal = configuration["response_total"];
 
             LicenceEligibilityResponse response = new LicenceEligibilityResponse();
             var messages = new List<string>();
@@ -52,8 +56,8 @@ namespace LicenceApplication
 
             // 1. First validate the date of birth
             int age = DateTime.Now.Year - dateOfBirth.Year;
-            if (DateTime.Now.DayOfYear < dateOfBirth.DayOfYear) age = age - 1;
-            if (age <= minimumAge)
+            if (dateOfBirth > DateTime.Now.AddYears(-age)) age--;
+            if (age < minimumAge)
             {
                 response.success = false;
                 messages.Add(String.Format(responseAgeInvalid, minimumAge.ToString()));
@@ -69,13 +73,13 @@ namespace LicenceApplication
             // 3. Calculate the cost of the licence
             double licenceCost = licenceAnnualFee * licenceTerm;
             total = total + licenceCost;
-            costs.Add(String.Format("£{0} for {1} year taxi licence charged at {2} per year.", licenceCost.ToString(), licenceTerm.ToString(), licenceAnnualFee));
+            costs.Add(String.Format(responseLicenceCost, licenceCost.ToString("0.00"), licenceTerm.ToString(), licenceAnnualFee));
 
             // 4. If a new licence add on that cost
             if (licenceType == LicenceType.New)
             {
                 total = total + newLicenceCost;
-                costs.Add(String.Format("£{0} for new licence application", newLicenceCost));
+                costs.Add(String.Format(responseNewLicenceCost, newLicenceCost.ToString("0.00")));
             }
 
             // 4. Apply any discount
@@ -83,20 +87,23 @@ namespace LicenceApplication
             {
                 discount = (total * oneTermDiscount);
                 total = total - discount;
-                costs.Add(String.Format("£{0} discount for one year licence.", discount));
+                costs.Add(String.Format(responseDiscount, discount.ToString("0.00"), "1"));
             }
             if (licenceTerm == 2 && twoTermDiscount > 0.00)
             {
                 discount = (total * twoTermDiscount);
                 total = total - discount;
-                costs.Add(String.Format("£{0} discount for two year licence.", discount));
+                costs.Add(String.Format(responseDiscount, discount.ToString("0.00"), "2"));
             }
             if (licenceTerm == 3 && threeTermDiscount > 0.00)
             {
                 discount = (total * threeTermDiscount);
                 total = total - discount;
-                costs.Add(String.Format("£{0} discount for three year licence.", discount));
+                costs.Add(String.Format(responseDiscount, discount.ToString("0.00"), "3"));
             }
+
+            // Also add the total
+            costs.Add(String.Format(responseTotal, total.ToString("0.00")));
 
             response.messages = messages;
             response.costs = costs;

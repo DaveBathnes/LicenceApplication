@@ -39,6 +39,7 @@ namespace LicenceApplication
             // Renewal Term Input
             if (renewal_response == ConsoleKey.Y)
             {
+                type = LicenceType.Renewal;
                 ConsoleKeyInfo termResponse;
                 do
                 {
