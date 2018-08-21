@@ -1,7 +1,7 @@
 Answers
 =======
 
-## How could you make the taxi license cost calculator more valuable for customers?
+### How could you make the taxi license cost calculator more valuable for customers?
 
 Initially I was surprised at the requirement to write a console application, but can see the value in this as an exercise and enjoyed looking at this.
 
@@ -13,7 +13,7 @@ Initially I was surprised at the requirement to write a console application, but
 
 5. I have included basic configuration so that the prices, discounts, and messages can be edited. In future these could be managed through a user interface that the licensing team would have access to.
 
-## What is your preferred test framework and why?
+### What is your preferred test framework and why?
 
 Perhaps it is because I 'grew up' with Microsoft technologies (from a coding point of view), but I like the Microsoft Suite of tools for both developing and testing. Particularly Visual Studio, the ability to construct Unit Tests, create Mock Services, and run these within the IDE.
 
@@ -21,19 +21,24 @@ I have also previously worked in teams using Visual Studio Team Foundations Serv
 
 Despite this, more recently I have been working with open web technologies and have been using Selenium both for testing but also automation, and very much enjoy experiencing a mix of tools rather than simply sticking to one technology stack, or suite.
 
-## How would you speed up the process of turning business ideas into features that customers can use?
+### How would you speed up the process of turning business ideas into features that customers can use?
+
+I believe one key goal is to widen the pool from which business ideas can be submitted. Particularly within IT and Development Teams,  through working with so many systems a lot of business expertise is held in IT staff heads. However it is often left to the business owners and workers to submit ideas, and these can end up being inpractical, impossible, or need technical expertise to be advised upon. 
+
+Similar to the above, engaging a combined forum of business and IT users would help to create ideas that are well formulated and possible to complete. Having a product owner who is regularly involved in maintenance of the product helps them to work on ideas.
+
+It is also perhaps an obvious point, but working using agile methodologies is specifically designed for this goal. Working on small chunks of work, with regularly releases, and constant interaction with business owners, means that features can be prioritised and made available very quickly.
+
+### How would you go about developing a new feature as part of an agile team?
+
+1. The feature should have a clear business value. Normally this stage of agile development would involve communication between the product owner and the development team.
+2. The feature should be described in a single manageable and estimable package. For example, if it would take longer to complete than a single agile 'sprint', it should be split up.
 
 
 
 
-## How would you go about developing a new feature as part of an agile team?
 
-The feature should have a clear business value. Normally this stage of agile development 
-
-
-
-
-## What is the difference between unit and acceptance testing?
+### What is the difference between unit and acceptance testing?
 
 Unit testing tests individual units of code. For example, I may have written a function which takes a number and times it by a certain amount, and returns the result. To unit test that code I could write a number of unit tests which covered ensuring the right result is returned, and also that the function had proper error handling.
 
