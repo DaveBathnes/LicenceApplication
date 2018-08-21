@@ -9,12 +9,12 @@ namespace LicenceApplication
     /// <summary>
     /// The Licence Types
     /// </summary>
-    enum LicenceType { New, Renewal };
+    public enum LicenceType { New, Renewal };
 
     /// <summary>
     /// Our Main Licence Application Class. Holds Methods for a Licence Application
     /// </summary>
-    class LicenceApplication
+    public class LicenceApplication
     {
         /// <summary>
         /// Checks for licence eligibility given a number of driver inputs
@@ -26,6 +26,10 @@ namespace LicenceApplication
         /// <returns></returns>
         public static LicenceEligibilityResponse CheckLicenceEligibility(LicenceType licenceType, bool dvla, int licenceTerm, DateTime dateOfBirth)
         {
+            // Validate method inputs
+            if (!Enum.IsDefined(typeof(LicenceType), licenceType)) throw new ArgumentException();
+            if (licenceTerm != 1 && licenceTerm != 2 && licenceTerm != 3) throw new ArgumentException();
+
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
             var configuration = builder.Build();
 
@@ -36,6 +40,8 @@ namespace LicenceApplication
             double oneTermDiscount = double.Parse(configuration["one_term_discount"]);
             double twoTermDiscount = double.Parse(configuration["two_term_discount"]);
             double threeTermDiscount = double.Parse(configuration["three_term_discount"]);
+            string responseAgeInvalid = configuration["response_age_invalid"];
+            string responseDVLARequired = configuration["response_dvla_required"];
 
             LicenceEligibilityResponse response = new LicenceEligibilityResponse();
             var messages = new List<string>();
@@ -50,14 +56,14 @@ namespace LicenceApplication
             if (age <= minimumAge)
             {
                 response.success = false;
-                messages.Add(String.Format("Licence applicants must be {0} years or older.", minimumAge.ToString()));
+                messages.Add(String.Format(responseAgeInvalid, minimumAge.ToString()));
             }
 
             // 2. Then validate the DVLA licence
             if (!dvla)
             {
                 response.success = false;
-                messages.Add(String.Format("Licence applicants must hold a full DVLA licence."));
+                messages.Add(String.Format(responseDVLARequired));
             }
 
             // 3. Calculate the cost of the licence
@@ -102,7 +108,7 @@ namespace LicenceApplication
     /// <summary>
     /// Class to hold a response object returned by a licence eligibility request.
     /// </summary>
-    class LicenceEligibilityResponse
+    public class LicenceEligibilityResponse
     {
         public bool success { get; set; }
         public List<string> messages { get; set; }
